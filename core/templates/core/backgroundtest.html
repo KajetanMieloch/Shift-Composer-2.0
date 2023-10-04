@@ -10,7 +10,7 @@ body {
     perspective: 1px;
     perspective-origin: 50% 50%;
     background: rgb(180,83,9);
-    background: linear-gradient(90deg, rgba(180,83,9,1) 13%, rgba(153,27,45,1) 100%); 
+    background: linear-gradient(90deg, rgba(180,83,9,1) 13%, rgba(153,27,45,1) 100%);
 }
 
 .slider-thumb::before {
@@ -49,12 +49,17 @@ body {
     }
 }
 
-.content {
-    height: 100vh;
+.mainView {
+    height: 50vh;
     text-align: center;
     color: white;
     z-index: 1;
 }
+.panels {
+    margin-top: 10vh;
+    width: 100%
+}
+
 
 {% endblock %}
 
@@ -62,27 +67,38 @@ body {
 
 
     <div class="slider-thumb"></div>
-    <div class="content">
+<div class="mainView">
         <h1>Hello World</h1>
 </div>
+<div class="panels">
+    <div class="divide-y-2 divide-slate-950">
+        <div class="flex">
+            <div class="w-3/5 bg-slate-950 p-4">
+            </div>
+            <div class="w-2/5 bg-slate-950 p-4 opacity-20">
+            </div>
+          </div>
+                
+          <div class="divide-y-2 divide-slate-950">
+            <div class="flex">
+                <div class="w-2/5 bg-slate-950 p-4 opacity-20">
+                </div>
+                <div class="w-3/5 bg-slate-950 p-4">
+                </div>
 
-<script>
-    const sliderThumb = document.querySelector(".slider-thumb");
-    let mouseX = 0;
-    let mouseY = 0;
-    
-    document.addEventListener("mousemove", (e) => {
-        const sensitivity = 1; // Adjust as needed for sensitivity
-    
-        // Calculate the new border-radius based on the mouse coordinates
-        const borderRadiusX = e.clientY * sensitivity + 20; // Adjust the base value as needed
-        const borderRadiusY = e.clientX * sensitivity + 20; // Adjust the base value as needed
-    
-        // Apply the border-radius to the slider-thumb
-        sliderThumb.style.borderRadius = `${borderRadiusX}px ${borderRadiusY}px`;
-    });
-    
-</script>
+              </div>
+        <div class="divide-y-2 divide-slate-950">
+            <div class="flex">
+                <div class="w-3/5 bg-slate-950 p-4">
+                </div>
+                <div class="w-2/5 bg-slate-950 p-4 opacity-20">
+                </div>
+              </div>
+      </div>
+</div>
+
+<div class="bg-red-500">
+    aaaa
+</div>
 
 {% endblock %}
-```
