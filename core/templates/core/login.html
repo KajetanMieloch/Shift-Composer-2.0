@@ -82,11 +82,48 @@ body {
     margin-top: 24vh;
 }
 
+.mobile {
+    display: none;
+    opacity: 0;
+}
+
+@media only screen and (max-width: 900px) {
+
+    .mainView{
+        display: none;
+    }
+    
+    .slider-thumb::before {
+        position: absolute;
+        content: "";
+        left: 40%;
+        top: 60%;
+        width: 100px;
+        height: 100px;
+        background: #17141d;
+        border-radius: 62% 47% 82% 35% / 45% 45% 80% 66%;
+        will-change: border-radius, transform, opacity;
+        animation: sliderShape 30s linear infinite;
+        display: block;
+        z-index: -1;
+        -webkit-animation: sliderShape 30s linear infinite;
+        transform-origin: center center;
+        transform: translateZ(-1px) scale(2);
+    }
+
+    .mobile {
+        display: block;
+        opacity: 1;
+        height: 71vh;
+    }
+
+}
+
 {% endblock %}
 
 {% block content %}
 
-
+<div class="desktop">
     <div class="slider-thumb"></div>
 
     <div class="mainView">
@@ -137,14 +174,47 @@ body {
                         </div>
             </div>
         </div>
+</div>
+</div>
+
+</div>
+<div class="mobile">
+    <div class="slider-thumb"></div>
+    <div class="height">
+        <div class="w-3/4 my-6 p-6 mx-auto bg-slate-900 boxsingup rounded-2xl">
+            <h1 class="text-2xl text-center font-bold py-4 text-orange-500">Log in</h1>
+            <form class="w-full max-w-sm" method="post" action=".">
+                {% csrf_token %}
+                <div class="border-b border-teal-500 py-2">
+                    {{form.username}}
+                </div>
+                <div class="border-b border-teal-500 py-2 mt-16">
+                    {{form.password}}
+                </div>
+                <div class="mt-16">
+
+                    {% if form.errors or form.non_field_errors %}
+                    <div class="text-red-500 font-bold">
+                        <p>Something went wrong!</p>
+                        {% for field in form %}
+                            {{ field.errors }}
+                        {% endfor %}
+                    </div>
+    
+                    {{ form.non_field_errors }}
+    
+                    {% endif %}<br> 
+                    <div class="text-center">
+                    <button class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                        Log in
+                    </button>
+                    </div>
+                </div>
+            </form>
 
     </div>
 
-<!--
-    <div class="bg-red-500">
-    aaaa
-</div>
 
--->
+</div>
 
 {% endblock %}
