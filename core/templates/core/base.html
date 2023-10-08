@@ -27,6 +27,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+
+    footer {
+        
+    }
+
+</style>
 
 </head>
 <body class="bg-slate-900">
@@ -40,7 +47,7 @@
                 <a href="#" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Logout</a>
             {% else %}
                 <a href="#" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Sing up</a>
-                <a href="#" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Log in</a>
+                <a href="{% url 'login' %}" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Log in</a>
             {% endif %}
         </div>
     </nav>
@@ -60,6 +67,7 @@
             <ul class="text-gray-400">
                 <li class="mb-2"><a href="/#" class="hover:text-gray-200">Home Page</a></li>
                 <li class="mb-2"><a href="/#" class="hover:text-gray-200">About</a></li>
+            </div>
             </footer>
 
 </body>

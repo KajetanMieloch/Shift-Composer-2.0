@@ -1,0 +1,136 @@
+{% extends "./base.html" %}
+
+{% block title %}BG tets{% endblock %}
+
+{% block style %}
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    perspective: 1px;
+    perspective-origin: 50% 50%;
+    background: rgb(180,83,9);
+    background: linear-gradient(90deg, rgba(180,83,9,1) 13%, rgba(153,27,45,1) 100%);
+}
+
+.slider-thumb::before {
+    position: absolute;
+    content: "";
+    left: 20%;
+    top: 40%;
+    width: 200px;
+    height: 200px;
+    background: #17141d;
+    border-radius: 62% 47% 82% 35% / 45% 45% 80% 66%;
+    will-change: border-radius, transform, opacity;
+    animation: sliderShape 30s linear infinite;
+    display: block;
+    z-index: -1;
+    -webkit-animation: sliderShape 30s linear infinite;
+    transform-origin: center center;
+    transform: translateZ(-1px) scale(2);
+}
+
+@keyframes sliderShape {
+    0%, 100% {
+        border-radius: 62% 47% 62% 35% / 45% 45% 70% 66%;
+    }
+    12.5% {
+        border-radius: 40% 30% 46% 54% / 30% 69% 71% 70%;
+    }
+    25% {
+        border-radius: 62% 57% 82% 35% / 65% 45% 70% 66%;
+    }
+    37.5% {
+        border-radius: 20% 70% 60% 54% / 40% 74% 47% 70%;
+    }
+    50% {
+        border-radius: 62% 47% 62% 45% / 45% 45% 50% 66%;
+    }
+    62.5% {
+        border-radius: 70% 34% 46% 54% / 30% 29% 71% 70%;
+    }
+    75% {
+        border-radius: 69% 47% 89% 39% / 30% 55% 70% 66%;
+    }
+    87.5% {
+        border-radius: 70% 38% 49% 54% / 30% 39% 79% 70%;
+    }
+}
+
+.mainView {
+    height: 78vh;
+    text-align: center;
+    color: white;
+    z-index: 1;
+}
+
+.mainView h1 {
+    margin-top: 40vh;
+}
+
+.fullh {
+    height: 78vh;
+}
+
+.margintop {
+    margin-top: 24vh;
+}
+
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="slider-thumb"></div>
+
+    <div class="mainView">
+
+        <div class="divide-y-2">
+            <div class="flex">
+                <div class="w-3/5 text-center text-white margintop">
+                </div>
+                <div class="w-2/5 text-center bg-slate-950 text-white fullh">
+                    <div class="flex mt-8">
+                        <div class="w-1/5">
+
+                        </div>
+                        <div class="w-3/5">
+                            <div class="text-2xl mt-16 font-bold">Log in</div>
+                            <div class="text-xl mt-16">
+                                <form class="w-full max-w-sm" method="post" action=".">
+                                    <div class="border-b border-teal-500 py-2">
+                                        <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Kajetan" aria-label="Full name">
+                                    </div>
+                                    <div class="border-b border-teal-500 py-2 mt-16">
+                                        <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="password" placeholder="******" aria-label="Full name">
+                                    </div>
+                                    <div class="mt-16">
+                                        <button class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                                            Sign In
+                                        </button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="w-1/5">
+                        </div>
+            </div>
+        </div>
+
+    </div>
+
+<!--
+    <div class="bg-red-500">
+    aaaa
+</div>
+
+-->
+
+{% endblock %}
