@@ -1,6 +1,6 @@
 {% extends "./base.html" %}
 
-{% block title %}BG tets{% endblock %}
+{% block title %}Log In{% endblock %}
 
 {% block style %}
 html{
@@ -64,7 +64,7 @@ body {
 }
 
 .mainView {
-    height: 78vh;
+    height: 76vh;
     text-align: center;
     color: white;
     z-index: 1;
@@ -75,7 +75,7 @@ body {
 }
 
 .fullh {
-    height: 78vh;
+    height: 76vh;
 }
 
 .margintop {
@@ -104,13 +104,27 @@ body {
                             <div class="text-2xl mt-16 font-bold">Log in</div>
                             <div class="text-xl mt-16">
                                 <form class="w-full max-w-sm" method="post" action=".">
+                                    {% csrf_token %}
                                     <div class="border-b border-teal-500 py-2">
-                                        <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Kajetan" aria-label="Full name">
+                                        {{form.username}}
                                     </div>
                                     <div class="border-b border-teal-500 py-2 mt-16">
-                                        <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="password" placeholder="******" aria-label="Full name">
+                                        {{form.password}}
                                     </div>
                                     <div class="mt-16">
+
+                                        {% if form.errors or form.non_field_errors %}
+                                        <div class="text-red-500 font-bold">
+                                            <p>Something went wrong!</p>
+                                            {% for field in form %}
+                                                {{ field.errors }}
+                                            {% endfor %}
+                                        </div>
+                        
+                                        {{ form.non_field_errors }}
+                        
+                                        {% endif %}<br> 
+
                                         <button class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" type="submit">
                                             Sign In
                                         </button>

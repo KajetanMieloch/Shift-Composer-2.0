@@ -1,0 +1,90 @@
+{% extends "./base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block style %}
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    perspective: 1px;
+    perspective-origin: 50% 50%;
+    background: rgb(180,83,9);
+    background: linear-gradient(90deg, rgba(180,83,9,1) 13%, rgba(153,27,45,1) 100%);
+}
+
+.fullh {
+    height: 76vh;
+}
+
+.halfh {
+    height: 38vh;
+}
+
+.fullw {
+    width: 100%;
+}
+
+.boxsingup {
+    box-shadow: 0 0 10px rgba(0,0,0,10);
+    position: absolute;
+    top: 15%;
+    left: 25%;
+}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="w-1/2 my-6 p-6 mx-auto bg-slate-900 boxsingup">
+    <h1 class="text-2xl text-center font-bold py-4 text-orange-500">Sign up</h1>
+
+    <form method="post" action=".">
+        {% csrf_token %}
+        <div class="border-b border-teal-500 py-2">
+            {{form.username}}
+        </div>
+        <div class="border-b border-teal-500 py-2 mt-12">
+            {{form.email}}
+        </div>
+        <div class="border-b border-teal-500 py-2 mt-12">
+            {{form.password1}}
+        </div>
+        <div class="border-b border-teal-500 py-2 mt-12">
+            {{form.password2}}
+        </div>
+        <div class="mt-12">
+
+            {% if form.errors or form.non_field_errors %}
+            <div class="text-red-500 font-bold">
+                <p>Something went wrong!</p>
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+            </div>
+
+            {{ form.non_field_errors }}
+
+            {% endif %}<br>
+        </div>
+        <div class="text-center">
+            <button class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                Sign Up
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="divide-x-2">
+    <div class="flex">
+        <div class="fullh fullw">
+            <div class="halfh fullw">
+            </div>
+            <div class="halfh bg-slate-950 fullw">
+            </div>   
+        </div>
+    </div>
+</div>
+
+{% endblock %}
