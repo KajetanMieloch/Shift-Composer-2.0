@@ -29,9 +29,22 @@
 
 <style>
 
-    footer {
-        
+.nava {
+    font-size: 1.5rem;
+}
+
+@media only screen and (max-width: 900px){
+    .nava{
+        display: none;
     }
+    .mobile a{
+        font-size: 0.8rem;
+    }
+
+    .mobile h3{
+        font-size: 1rem;
+    }
+}
 
 </style>
 
@@ -39,9 +52,9 @@
 <body class="bg-slate-900">
     <nav class="py-6 px-6 flex justify-between items-center bg-slate-950">
         <div>
-            <a href="/" class="text-2xl font-bold text-gray-300">Shift Composer - HR Managment</a>
+            <a href="/" class="nava font-bold text-gray-300">Shift Composer - HR Managment</a>
         </div>
-        <div class="space-x-6">
+        <div class="space-x-6 mobile">
             {% if user.is_authenticated %}
                 <a href="#" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Dashboard</a>
                 <a href="{% url 'logout' %}" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Logout</a>
@@ -56,9 +69,9 @@
         {% endblock %}
     </div>
 
-    <footer class="py-6 px-6 flex justify-between bg-slate-950">
+    <footer class="py-6 px-6 flex justify-between bg-slate-950 mobile">
         <div class="w-2/3 pr-10">
-            <h3 class="text-gray-200 text-2xl font-bold">Shift Composer - HR Managment</h3>
+            <h3 class="text-gray-200 font-bold">Shift Composer - HR Managment</h3>
             <p class="text-gray-400">Kajetan Mieloch 2023</p>
         </div>
 

@@ -31,13 +31,21 @@ body {
     position: absolute;
     top: 15%;
     left: 25%;
+    width: 50%;
+}
+
+@media only screen and (max-width: 900px) {
+    .boxsingup {
+        width: 90%;
+        left: 5%;
+    }
 }
 
 {% endblock %}
 
 {% block content %}
 
-<div class="w-1/2 my-6 p-6 mx-auto bg-slate-900 boxsingup">
+<div class="my-6 p-6 mx-auto bg-slate-900 boxsingup">
     <h1 class="text-2xl text-center font-bold py-4 text-orange-500">Sign up</h1>
 
     <form method="post" action=".">
