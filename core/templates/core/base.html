@@ -33,6 +33,8 @@
     font-size: 1.5rem;
 }
 
+
+
 @media only screen and (max-width: 900px){
     .nava{
         display: none;
@@ -59,7 +61,7 @@
                 <a href="#" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Dashboard</a>
                 <a href="{% url 'logout' %}" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Logout</a>
             {% else %}
-                <a href="{% url 'signup' %}" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Sing up</a>
+                <a href="{% url 'signup' %}" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Sign up</a>
                 <a href="{% url 'login' %}" class="px-6 py-2 bg-slate-900 text-white rounded hover:bg-slate-800">Log in</a>
             {% endif %}
         </div>
@@ -69,7 +71,7 @@
         {% endblock %}
     </div>
 
-    <footer class="py-6 px-6 flex justify-between bg-slate-950 mobile">
+    <footer class="py-6 px-6 flex justify-between bg-slate-950">
         <div class="w-2/3 pr-10">
             <h3 class="text-gray-200 font-bold">Shift Composer - HR Managment</h3>
             <p class="text-gray-400">Kajetan Mieloch 2023</p>
