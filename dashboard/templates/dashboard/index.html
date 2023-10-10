@@ -50,13 +50,37 @@
   font-size: 1rem;
   color: #333;
 }
+
+
+@media (max-width: 900px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 1rem;
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 425px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(1, auto);
+    gap: 1rem;
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
 {% endblock %}
 
 
 {% block content %}
 
 <div class="text-center mt-8 mb-16">
-<h1 class="header text-orange-400 text-5xl font-bold">Welcome back {{ user.username }}!</h1>
+<h1 class="header text-orange-400 text-5xl font-bold">Managment</h1>
 <hr style="width: 60%; margin-left: 20%; margin-top: 20px; margin-bottom: 20px;">
 <div class="grid">
   <div class="card">
@@ -87,6 +111,40 @@
       </div>
   </div>
 </div>
+
+<div class="text-center mt-8 mb-16">
+  <h1 class="header text-orange-400 text-5xl font-bold">Settings</h1>
+  <hr style="width: 60%; margin-left: 20%; margin-top: 20px; margin-bottom: 20px;">
+  <div class="grid">
+    <div class="card">
+        <img src="https://media.istockphoto.com/id/597633562/photo/we-did-it.jpg?s=170667a&w=0&k=20&c=jab9oxJhjs86Ee13rf5kyecnZrlbgwwhfouUL6u8kb0=" alt="Card 1">
+        <div class="card-content">
+            <div class="card-title">Profile</div>
+            <p class="card-description">
+                Profile settings, change your password, change your email, change your name. Upload your profile picture.
+            </p>
+        </div>
+    </div>
+    <div class="card">
+        <img src="https://images.pexels.com/photos/1367272/pexels-photo-1367272.jpeg?cs=srgb&dl=pexels-rebrand-cities-1367272.jpg" alt="Card 2">
+        <div class="card-content">
+            <div class="card-title">Organisation</div>
+            <p class="card-description">
+                Add new profiles to your organisation, view and edit their information, add there dispositions.
+            </p>
+        </div>
+    </div>
+    <div class="card">
+        <img src="https://media.istockphoto.com/id/1419539600/photo/business-presentation-and-man-on-a-laptop-in-a-corporate-conference-or-office-collaboration.webp?b=1&s=170667a&w=0&k=20&c=uucFbLp3S3vTpwmYBtI3tiLQssKCgSbX4GTaQdQeeq4=" alt="Card 3">
+        <div class="card-content">
+            <div class="card-title">Coming soon</div>
+            <p class="card-description">
+                  Lorem ipsum.
+            </p>
+        </div>
+    </div>
+  </div>
+  
 
 
 {% endblock %}

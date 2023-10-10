@@ -30,6 +30,8 @@ LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+RECAPTCHA_PUBLIC_KEY = '6LdYf40oAAAAAPlBrQ7f4L9P_VQSuOsbreCf2wvJ'
+RECAPTCHA_PRIVATE_KEY = '6LdYf40oAAAAAIiAH-tSiAFfp65msptG8pJDMDT7'
 
 # Application definition
 
@@ -42,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'dashboard',
+    'captcha',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

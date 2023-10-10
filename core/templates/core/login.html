@@ -119,6 +119,9 @@ body {
 
 }
 
+
+{{ form.captcha.css }}
+
 {% endblock %}
 
 {% block content %}
@@ -192,6 +195,10 @@ body {
                 <div class="border-b border-teal-500 py-2 mt-16">
                     {{form.password}}
                 </div>
+                {% load widget_tweaks %}
+                {% block extra_head %}
+                  {{ form.captcha }}
+                {% endblock %}
                 <div class="mt-16">
 
                     {% if form.errors or form.non_field_errors %}
