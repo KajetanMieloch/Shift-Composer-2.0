@@ -154,6 +154,27 @@ body {
                         <div class="w-3/5">
 
                             <div class="text-xl mt-16">
+                                {% if messages %}
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                        <li class="{% if message.tags == 'success' %}bg-green-100 text-green-600 border-green-500{% elif message.tags == 'error' %}bg-red-100 text-red-600 border-red-500{% endif %} border-l-4 py-2 px-4 my-2">
+                                            {{ message }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            {% if form.errors or form.non_field_errors %}
+                            <ul class="messages">
+                            <li class="bg-red-100 text-red-600 border-red-500 border-l-4 py-2 px-4 my-2">
+                            {% for field in form %}
+                                {{ field.errors }}
+                            {% endfor %}
+                            </li>
+                        </ul>
+                            {% endif %}<br>            
+
+
+
                                 <form class="w-full max-w-sm" method="post" action=".">
                                     {% csrf_token %}
                                     <div class="border-b border-teal-500 py-2">
@@ -167,18 +188,6 @@ body {
                                       {{ form.captcha }}
                                     </div>
                                     <div class="mt-16">
-
-                                        {% if form.errors or form.non_field_errors %}
-                                        <div class="text-red-500 font-bold">
-                                            <p>Something went wrong!</p>
-                                            {% for field in form %}
-                                                {{ field.errors }}
-                                            {% endfor %}
-                                        </div>
-                        
-                                        {{ form.non_field_errors }}
-                        
-                                        {% endif %}<br> 
 
                                         <button class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" type="submit">
                                             Sign In

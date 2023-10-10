@@ -47,7 +47,15 @@ body {
 
 <div class="my-6 p-6 mx-auto bg-slate-900 boxsingup">
     <h1 class="text-2xl text-center font-bold py-4 text-orange-500">Sign up</h1>
-
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{% if message.tags == 'success' %}bg-green-100 border-green-500{% elif message.tags == 'error' %}bg-red-100 border-red-500{% endif %} border-l-4 py-2 px-4 my-2">
+                {{ message }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
     <form method="post" action=".">
         {% csrf_token %}
         <div class="border-b border-teal-500 py-2">
@@ -62,22 +70,14 @@ body {
         <div class="border-b border-teal-500 py-2 mt-12">
             {{form.password2}}
         </div>
-        <div class="mt-16">
+        <div class="mt-6 text-white">
+            {{ form.acceptTOS }} I accept the  <a href="#" class="text-orange-500">Terms of Service</a>
+        </div>
+        <div class="mt-6">
             {{ form.captcha }}
         </div>
-        <div class="mt-12">
+        <div class="mt-6">
 
-            {% if form.errors or form.non_field_errors %}
-            <div class="text-red-500 font-bold">
-                <p>Something went wrong!</p>
-                {% for field in form %}
-                    {{ field.errors }}
-                {% endfor %}
-            </div>
-
-            {{ form.non_field_errors }}
-
-            {% endif %}<br>
         </div>
         <div class="text-center">
             <button class="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" type="submit">

@@ -23,7 +23,7 @@ class LoginForm(AuthenticationForm):
 class SignupForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'captcha')
+        fields = ('username', 'email', 'password1', 'password2', 'acceptTOS', 'captcha')
         
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none',
@@ -43,6 +43,10 @@ class SignupForm(UserCreationForm):
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none',
         'placeholder': '******',
+        }))
+    
+    acceptTOS = forms.BooleanField(widget=forms.CheckboxInput(attrs={
+        'class': 'form-check-input',
         }))
     
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())

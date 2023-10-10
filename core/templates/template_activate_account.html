@@ -1,0 +1,8 @@
+{% autoescape off %}
+Welcome to Shift Composer {{ user.username }},
+
+Im glad, that you are interested in my project. I hope it will improve your HR managment and make your life easier.
+
+http://{{domain}}{% url 'core:activate' uidb64=uid token=token %}
+
+{% endautoescape %}
