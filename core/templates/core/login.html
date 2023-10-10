@@ -119,8 +119,19 @@ body {
 
 }
 
+.g-recaptcha{
+    transform:scale(0.9);
+    -webkit-transform:scale(0.9);
+    transform-origin:0 0;
+    -webkit-transform-origin:0 0;
+}
 
-{{ form.captcha.css }}
+@media (max-width: 767px) {
+    .g-recaptcha {
+      transform: scale(0.8);
+      transform-origin: 0 0;
+    }
+  }
 
 {% endblock %}
 
@@ -151,6 +162,9 @@ body {
                                     </div>
                                     <div class="border-b border-teal-500 py-2 mt-16">
                                         {{form.password}}
+                                    </div>
+                                    <div class="mt-16">
+                                      {{ form.captcha }}
                                     </div>
                                     <div class="mt-16">
 
@@ -189,16 +203,15 @@ body {
             <h1 class="text-2xl text-center font-bold py-4 text-orange-500">Log in</h1>
             <form class="w-full max-w-sm" method="post" action=".">
                 {% csrf_token %}
-                <div class="border-b border-teal-500 py-2">
+                <div class="border-b border-teal-500 py-2 w-full">
                     {{form.username}}
                 </div>
                 <div class="border-b border-teal-500 py-2 mt-16">
                     {{form.password}}
                 </div>
-                {% load widget_tweaks %}
-                {% block extra_head %}
+                <div class="mt-16">
                   {{ form.captcha }}
-                {% endblock %}
+                </div>
                 <div class="mt-16">
 
                     {% if form.errors or form.non_field_errors %}
