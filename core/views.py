@@ -25,13 +25,15 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             user = form.get_user()
-            if not user.is_active:
-                messages.error(request, 'Your account is not activated. Please check your email for an activation link.')
+            #Commented section is bugged. This should be after 2 else
+            #if not user.is_active:
+            #    messages.error(request, 'Your account is not activated. Please check your email for an activation link.')
             else:
                 login(request, user)
                 messages.success(request, f'Welcome back, {user.username}!')
                 return redirect('dashboard:index')
         else:
+            #<--------------------------- HERE
             for error in list(form.errors.values()):
                 messages.error(request, error)
 
