@@ -27,6 +27,7 @@ LOGOUT_REDIRECT_URL = '/'
 RECAPTCHA_PUBLIC_KEY = '6LdYf40oAAAAAPlBrQ7f4L9P_VQSuOsbreCf2wvJ'
 RECAPTCHA_PRIVATE_KEY = '6LdYf40oAAAAAIiAH-tSiAFfp65msptG8pJDMDT7'
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'dashboard',
     'captcha',
     'widget_tweaks',
+    'organisation',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +136,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 PASSWORD_RESET_TIMEOUT = 14400
+
+

@@ -2,9 +2,8 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from .forms import SignupForm
 from django.contrib import messages
-
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.models import User
+from .models import UserProfile
+from django.contrib.auth import login
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -68,6 +67,7 @@ def activateEmail(request, user, to_email):
     else:
         messages.error(request, f'An error occurred while sending an email to {to_email}.')
 
+
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -75,15 +75,14 @@ def signup(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
+
+            # Create a UserProfile object for the new user
+            UserProfile.objects.create(user=user)
+
             activateEmail(request, user, form.cleaned_data.get('email'))
-        
         else:
             for error in list(form.errors.values()):
                 messages.error(request, error)
-        
     else:
         form = SignupForm()
-    
-    return render(request, 'core/signup.html', {
-        'form': form,
-    })
+    return render(request, 'core/signup.html', {'form': form})
