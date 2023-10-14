@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
+from .models import UserProfile
 
 class LoginForm(AuthenticationForm):
     
@@ -50,3 +51,10 @@ class SignupForm(UserCreationForm):
         }))
     
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
+    
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        if commit:
+            user.save()
+            user_profile = UserProfile.objects.create(user=user)
+        return user
