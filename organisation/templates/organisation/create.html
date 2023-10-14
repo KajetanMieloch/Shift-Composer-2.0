@@ -7,25 +7,14 @@
 
 {% block content %}
 {% if in_organisation %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-green-600 text-3xl">You Are Arleady In Organisation</h1>
-                <h1 class="text-green-500 text-3xl">Organisation Name: {{ organisation.name }}</h1>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="col-span-1">
-                        <a href="{% url 'organisation:leave' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                            Leave Organisation
-                        </a>
-                    </div>
-                    <div class="col-span-1">
-                        <a href="{% url 'organisation:delete' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                            Delete Organisation
-                        </a>
-                    </div>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-green-600 text-3xl">You Are Arleady In Organisation</h1>
+            <h1 class="text-green-500 text-3xl">Organisation Name: {{ organisation.name }}</h1>
         </div>
     </div>
+</div>
 {% else %}
     <div class="container">
         <div class="row">

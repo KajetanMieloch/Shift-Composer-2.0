@@ -6,17 +6,36 @@
 {% endblock %}
 
 {% block content %}
+<script>
+    const areYouSure = () => {
+        const result = confirm("Are You Sure You Want To Leave Organisation?");
+        if (result) {
+            window.location.href = "{% url 'organisation:leave' %}";
+        }
+    }
+</script>
 {% if in_organisation %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-green-600 text-3xl">You Are In Organisation</h1>
-                <p class="text-green-500 text-3xl">Organisation Name: {{ organisation.name }}</p>
-                <h1 class="text-green-600 text-3xl">Organisation Members count: {{ organisation.members.count }}</h1>
-                <h1 class="text-green-600 text-3xl">Organisation Members: {{ organisation.members.all}}</h1>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-green-600 text-3xl">You Are In Organisation</h1>
+            <h1 class="text-green-500 text-3xl">Organisation Name: {{ organisation.name }}</h1>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="col-span-1">
+                    <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="areYouSure()">
+                        Leave Organisation
+                    </a>
+                </div>
+                {% if is_admin %}
+                <div class="col-span-1">
+                    <a href="{% url 'organisation:delete' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        Delete Organisation
+                    </a>
+                </div>
+                {% endif %}
         </div>
     </div>
+</div>
 {% else %}
     <div class="container">
         <div class="row">
