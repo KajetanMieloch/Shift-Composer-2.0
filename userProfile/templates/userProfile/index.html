@@ -10,12 +10,26 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Dashboard</h1>
+<div class="mt-6 mb-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h1 class="mb-6 text-4xl font-bold text-center text-sky-950">Your profile</h1>
+    <div class="flex flex-col items-center justify-center">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="flex flex-col items-center justify-center border-2 rounded-xl shadow-xl">
+                <div class="flex flex-col items-center justify-center">
+                    <h1 class="mt-4 mb-2 text-xl font-bold text-center text-sky-950">{{ user.username }}</h1>
+                    <p class="mb-4 text-center text-gray-500">{{ user.email }}</p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <a href="#" class="px-4 py-2 mb-2 text-sm font-bold text-center text-white bg-sky-950 rounded-xl hover:bg-sky-850">Update profile</a>
+                    <a href="#" class="px-4 py-2 mb-2 text-sm font-bold text-center text-white bg-sky-950 rounded-xl hover:bg-sky-850">Change password</a>
+                    <a href="{% url 'core:logout' %}" class="px-4 py-2 mb-2 text-sm font-bold text-center text-white bg-sky-950 rounded-xl hover:bg-sky-850">Logout</a>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
+</div>
+
 
 
 {% endblock %}

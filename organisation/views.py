@@ -112,12 +112,14 @@ def generate(request):
             code = generate_code()
             invitation = Invitation(code=code, organisation=organisation, expires=timezone.now() + timedelta(days=2))
             invitation.save()
+            invUrl = request.build_absolute_uri('/organisation/invite/' + code + '/')
             return render(request, 'organisation/index.html', {
                 'user': request.user,
                 'in_organisation': Organisation.objects.get(members__user=request.user).members.filter(user=request.user).exists(),
                 'is_admin': Organisation.objects.get(members__user=request.user).admins.filter(user=request.user).exists(),
                 'organisation': Organisation.objects.get(members__user=request.user),
                 'code': code,
+                'invUrl': invUrl,
                 })
     except:
         pass
@@ -142,3 +144,25 @@ def join(request):
             return redirect('organisation:index')
     
     return redirect('organisation:index')
+
+@login_required
+def join_with_url(request, code):
+    
+    try:
+        Organisation.objects.get(members__user=request.user)
+        return redirect('organisation:index')
+    except:
+        pass
+    
+    try:        
+        invitation = Invitation.objects.get(code=code)
+        if invitation.expires < timezone.now():
+            invitation.delete()
+            return redirect('organisation:index')
+        organisation = invitation.organisation
+        organisation.members.add(UserProfile.objects.get(user=request.user))
+        organisation.save()
+        invitation.delete()
+        return redirect('organisation:index')
+    except:
+        return redirect('organisation:index')

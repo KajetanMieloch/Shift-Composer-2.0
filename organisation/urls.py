@@ -13,4 +13,5 @@ urlpatterns = [
     path('create/', views.create, name='create'),
     path('remove/<int:user_id>/', views.remove, name='remove'),
     path('generate/', views.generate, name='generate'),
+    path('invite/<str:code>/', views.join_with_url, name='join_with_url'),
 ]
