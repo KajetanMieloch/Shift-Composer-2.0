@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'captcha',
     'widget_tweaks',
     'organisation',
+    'userProfile',
 ]
 
 MIDDLEWARE = [

@@ -9,6 +9,7 @@ import string
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from .models import Invitation
+from django.utils import timezone
 
 
 @login_required
@@ -38,10 +39,6 @@ def notinorg(request):
     return render(request, 'organisation/notinorg.html', {
         'user': request.user,
         })
-
-@login_required
-def join(request):
-    return render(request, 'organisation/join.html')
 
 @login_required
 def leave(request):
@@ -105,7 +102,7 @@ def remove(request, user_id):
 
 
 def generate_code():
-    return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
+    return ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(9))
 
 @login_required
 def generate(request):
@@ -113,8 +110,7 @@ def generate(request):
         organisation = Organisation.objects.get(members__user=request.user)
         if organisation.admins.filter(user=request.user).exists():
             code = generate_code()
-            invitation = Invitation(code=code, organisation=organisation, expires=datetime.now() + timedelta(days=1))
-            print(invitation)
+            invitation = Invitation(code=code, organisation=organisation, expires=timezone.now() + timedelta(days=2))
             invitation.save()
             return render(request, 'organisation/index.html', {
                 'user': request.user,
@@ -125,5 +121,24 @@ def generate(request):
                 })
     except:
         pass
+    
+    return redirect('organisation:index')
+
+@login_required
+def join(request):
+    if request.method == 'POST':
+        code = request.POST['code']
+        try:
+            invitation = Invitation.objects.get(code=code)
+            if invitation.expires < timezone.now():
+                invitation.delete()
+                return redirect('organisation:index')
+            organisation = invitation.organisation
+            organisation.members.add(UserProfile.objects.get(user=request.user))
+            organisation.save()
+            invitation.delete()
+            return redirect('organisation:index')
+        except:
+            return redirect('organisation:index')
     
     return redirect('organisation:index')

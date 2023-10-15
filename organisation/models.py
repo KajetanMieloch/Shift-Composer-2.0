@@ -12,7 +12,7 @@ class Organisation(models.Model):
 
 class Invitation(models.Model):
     id = models.AutoField(primary_key=True)
-    code = models.CharField(max_length=6)
+    code = models.CharField(max_length=9)
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
     expires = models.DateTimeField()
 
