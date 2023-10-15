@@ -6,17 +6,97 @@
 {% endblock %}
 
 {% block content %}
+<script>
+    const areYouSure = (c, name = null , id = null) => {
+
+        if(c == 1){
+            if(confirm("Are you sure you want to leave this organisation? This action cannot be undone!")) {
+                var input = prompt("Please type 'leave {{ organisation.name }}' to confirm this action.");
+                if(input == "leave {{ organisation.name }}"){
+                    window.location.href = "{% url 'organisation:leave' %}";
+                }
+                else{
+                    alert("You did not type 'leave {{ organisation.name }}'. Please try again.");
+                }
+            }}
+        else if(c == 2){
+            if(confirm("Are you sure you want to delete this organisation? This action cannot be undone! All members will be removed from the organisation.")) {
+                var input = prompt("Please type 'delete {{ organisation.name }}' to confirm this action.");
+                if(input == "delete {{ organisation.name }}"){
+                    window.location.href = "{% url 'organisation:delete' %}";
+                }
+                else{
+                    alert("You did not type 'delete {{ organisation.name }}'. Please try again.");
+                }
+            }}
+        else if(c == 3){
+            if(confirm("Are you sure you want to remove this member from the organisation? This action cannot be undone!")) {
+                var input = prompt("Please type 'remove "+ name + "' to confirm this action.");
+                if(input == "remove "+ name){
+                    window.location.href = "{% url 'organisation:remove' 0 %}".replace('0', id);
+                }
+                else{
+                    alert("You did not type 'remove "+ name + "'. Please try again.");
+                }
+            }}
+        else{
+            alert("Error: Invalid Input");
+        }
+    }
+</script>
 {% if in_organisation %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="text-green-600 text-3xl">You Are In Organisation</h1>
-                <p class="text-green-500 text-3xl">Organisation Name: {{ organisation.name }}</p>
-                <h1 class="text-green-600 text-3xl">Organisation Members count: {{ organisation.members.count }}</h1>
-                <h1 class="text-green-600 text-3xl">Organisation Members: {{ organisation.members.all}}</h1>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-green-600 text-3xl">You Are In Organisation</h1>
+            <h1 class="text-green-500 text-3xl">Organisation Name: {{ organisation.name }}</h1>
+            <div class="grid grid-cols-2 grid-rows-2 gap-4">
+                <div class="col-span-1">
+                    <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="areYouSure(1)">
+                        Leave Organisation
+                    </a>
+                </div>
+                {% if is_admin %}
+                <div class="col-span-1">
+                    <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="areYouSure(2)">
+                        Delete Organisation
+                    </a>
+                </div>
+            </br>
+            </br>
+            </br>
+                    <div class="col-span-1">
+                        <a class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                            Invite Code:
+                        </a>
+                        <a class="bg-green-500 text-white font-bold py-2 px-4 rounded" href="{% url 'organisation:generate' %}">
+                            Genereate New Code (Will be inactivated after 24 hours, or when code is used)
+                        </a>
+                    </br>
+                </br>
+                                </br>
+                        <a class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                            {{code}}
+                        </a>
+                    </div>
+                    <div class="col-span-1">
+                        {% for member in organisation.members.all %}
+                    </br>
+                    </br>
+                            <a class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                                {{ member }}
+                            </a>
+                            <a class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                                <a class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onclick="areYouSure(3, '{{member}}', {{member.id}})">
+                                    Remove
+                                </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
         </div>
     </div>
+</div>
 {% else %}
     <div class="container">
         <div class="row">

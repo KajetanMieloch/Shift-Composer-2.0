@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+
+{% block title %}Organisation{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-red-600 text-3xl">You Are Not In Organisation</h1>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-1">
+                        <a href="{% url 'organisation:create' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            Create Organisation
+                        </a>
+                    </div>
+                    <div class="col-span-1">
+                        <a href="{% url 'organisation:join' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            Join Organisation
+                        </a>
+                    </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
