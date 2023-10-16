@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+
+{% block title %}Your employees{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<div class="mt-6 mb-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h1 class="mb-6 text-4xl font-bold text-center text-sky-950">Employees</h1>
+    <div class="flex flex-col items-center justify-center">
+        <div class="grid grid-cols-3 gap-4">
+            {% for employee in employees %}
+            <div class="flex flex-col items-center justify-center border-2 rounded-xl shadow-xl">
+                <p class="text-center text-2xl font-bold text-sky-950 mt-6">{{ employee.name }} {{ employee.surename }}</p>
+                <p class="text-center text-l text-sky-950 mt-2 mb-6">{{ employee.position }}</p>
+                <form method="post" action="#">
+                </br>
+                    {% csrf_token %}
+                    <div class="flex flex-col items-center justify-center">
+                        <a type="submit" name="action" class="px-4 mt-2 mb-2 py-2 text-white bg-green-950 rounded-xl hover:bg-green-800" value="Edit">Details</a>
+                        <a href={% url 'employees:delete' employee.id%} type="submit" name="action" class="px-4 mb-2 mt-2 py-2 text-white bg-red-950 rounded-xl hover:bg-red-800" value="Delete">Delete {{ employee.name }}</a>
+                    </div>
+                </form>
+            </div>
+
+            {% endfor %}
+</div>
+</div>
+{% endblock %}
