@@ -6,25 +6,46 @@
 {% endblock %}
 
 {% block content %}
-<div class="mt-6 mb-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h1 class="mb-6 text-4xl font-bold text-center text-sky-950">Employees</h1>
-    <div class="flex flex-col items-center justify-center">
-        <div class="grid grid-cols-3 gap-4">
-            {% for employee in employees %}
-            <div class="flex flex-col items-center justify-center border-2 rounded-xl shadow-xl">
-                <p class="text-center text-2xl font-bold text-sky-950 mt-6">{{ employee.name }} {{ employee.surename }}</p>
-                <p class="text-center text-l text-sky-950 mt-2 mb-6">{{ employee.position }}</p>
-                <form method="post" action="#">
-                </br>
-                    {% csrf_token %}
-                    <div class="flex flex-col items-center justify-center">
-                        <a type="submit" name="action" class="px-4 mt-2 mb-2 py-2 text-white bg-green-950 rounded-xl hover:bg-green-800" value="Edit">Details</a>
-                        <a href={% url 'employees:delete' employee.id%} type="submit" name="action" class="px-4 mb-2 mt-2 py-2 text-white bg-red-950 rounded-xl hover:bg-red-800" value="Delete">Delete {{ employee.name }}</a>
-                    </div>
-                </form>
-            </div>
+<script>
+    const areYouSure = (c, name = null , id = null) => {
 
-            {% endfor %}
+        if(c == 1){
+            if(confirm("Are you sure you want to remove " + name + "?")) {
+                window.location.href = "{% url 'employees:delete' 0 %}".replace('0', id);
+            }
+        }
+    }
+</script>
+<div class="mt-6 mb-6 bg-gray-100 rounded-xl p-6">
+    <h1 class="mb-6 mt-6 text-4xl font-bold text-center text-sky-950">Employees</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 w-full">
+        <form action="{% url 'employees:add_position' %}" method="POST" class="border-2 rounded-xl shadow-xl px-8 py-6 flex items-center justify-center grid grid-cols-1 grid-row-2 gap-4">
+            {% csrf_token %}
+            {{addPositionForm.as_p}}
+            <button class="p-4 py-2 text-white bg-sky-950 rounded-xl hover:bg-sky-800 text-center">Add Position</button>
+        </form>
+        <form action="{% url 'employees:add_position' %}" method="POST" class="border-2 rounded-xl shadow-xl px-8 py-6 flex items-center justify-center grid grid-cols-1 grid-row-2 gap-4">
+            {% csrf_token %}
+            {{addEmployeeForm.as_p}}
+            <button class="p-4 py-2 text-white bg-sky-950 rounded-xl hover:bg-sky-800 text-center">Add Employee</button>
+        </form>
+        {% for employee in employees %}
+        <div class="border-2 rounded-xl shadow-xl px-8 py-6">
+            <div>
+                <p class="text-2xl font-bold text-sky-950">{{ employee.name }} {{ employee.surname }}</p>
+                <p class="text-l text-sky-950">{{ employee.position }}</p>
+            </div>
+            <div class="flex items-center justify-center mt-4">
+                <a href="{% url 'employees:details' employee.id %}" class="p-4 py-2 text-white bg-green-950 rounded-xl hover:bg-green-800 mx-2">Details</a>
+                <a class="p-4 py-2 text-white bg-red-950 rounded-xl hover:bg-red-800" onclick="areYouSure(1, '{{ employee.name }}', {{ employee.id }})">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-</div>
+
+
+
+
+
 {% endblock %}

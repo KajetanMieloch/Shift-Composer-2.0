@@ -14,18 +14,22 @@ class Employee(models.Model):
     id = models.AutoField(primary_key=True)
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    surename = models.CharField(max_length=100)
+    surname = models.CharField(max_length=100)
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
 
     def __str__(self):
-        return  self.organisation.name + " - " + self.name + " " + self.surename + " - " + self.position.position
+        return  self.organisation.name + " - " + self.name + " " + self.surname + " - " + self.position.position
     
 class Availability(models.Model):
     
     AVALIABILITY_CHOICES = (
-        ('Niedostepny', 'Niedostepny'),
-        ('Dostepny', 'Dostepny'),
-        ('Godziny', 'Dostepny w godzinach'),
+        ('available', 'Available'),
+        ('available_in_hours', 'Available in hours'),
+        ('unavailable', 'Unavailable'),
+        ('holiday', 'Holiday'),
+        ('sick', 'Sick'),
+        ('unpaid', 'Unpaid'),
+        ('other', 'Other'),
     )
     
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -35,5 +39,5 @@ class Availability(models.Model):
     availability_hours_end = models.TimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.employee.name + " " + self.employee.surename + " - " + str(self.day) + " - " + self.availability
+        return self.employee.name + " " + self.employee.surname + " - " + str(self.day) + " - " + self.availability
 

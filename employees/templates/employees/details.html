@@ -1,0 +1,21 @@
+{% extends "core/base.html" %}
+
+{% block title %}Your employees{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<div class="mt-6 mb-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h1 class="mb-6 text-4xl font-bold text-center text-sky-950">{{ employee.name }} {{ employee.surename }}</h1>
+    <div class="flex flex-col items-center justify-center">
+        <div class="grid grid-cols-3 gap-4">
+            <div>
+            </div>
+            <div class="flex flex-col items-center justify-center border-2 rounded-xl shadow-xl">
+            <p class="text-center text-2xl font-bold text-sky-950 mt-6">Available days</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
