@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'organisation',
     'userProfile',
+    'employees',
 ]
 
 MIDDLEWARE = [
