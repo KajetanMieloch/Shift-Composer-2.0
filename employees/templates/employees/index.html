@@ -17,6 +17,18 @@
     }
 </script>
 <div class="mt-6 mb-6 bg-gray-100 rounded-xl p-6">
+    {% for msg in messages %}
+    {% if msg.tags == 'error' %}
+    <div class="px-6 py-4 mb-4 text-sm text-center bg-red-300 rounded-xl text-red-600 text-3xl font-bold">
+        {{ msg }}
+    </div>
+    {% endif %}
+    {% if msg.tags == 'success' %}
+    <div class="px-6 py-4 mb-4 text-sm text-center bg-green-500 rounded-xl opacity-50 text-white-100 text-3xl font-bold">
+        {{ msg }}
+    </div>
+    {% endif %}
+    {% endfor %}
     <h1 class="mb-6 mt-6 text-4xl font-bold text-center text-sky-950">Employees</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 w-full">
         <form action="{% url 'employees:add_position' %}" method="POST" class="border-2 rounded-xl shadow-xl px-8 py-6 flex items-center justify-center grid grid-cols-1 grid-row-2 gap-4">

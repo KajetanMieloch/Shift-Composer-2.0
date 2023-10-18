@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Employee, Availability, Position
 from organisation.models import Organisation
 from .forms import AddPositionForm, AddEmployeeForm
+from django.contrib import messages
 
 @login_required
 def index(request):
@@ -38,7 +39,11 @@ def delete(request, employee_id):
         if userOrganisation == employeeOrganisation:
             employee = Employee.objects.get(pk=employee_id)
             employee.delete()
+            messages.success(request, f'{employee} deleted successfully')
+        else:
+            messages.error(request, f'Employee not found')
     except:
+        messages.error(request, f'Employee not found')
         pass
 
     return redirect('employees:index')
@@ -82,8 +87,9 @@ def add_position(request):
         alreadyExistingPositions = Position.objects.filter(organisation=userOrganisation, position=position)
         if not alreadyExistingPositions:
             position.save()
+            messages.success(request, f'Position {position} added successfully')
         else:
-            #Here will be message that position already exists
+            messages.error(request,f'Position {position} already exists')
             pass
 
     return redirect('employees:index')
@@ -106,5 +112,6 @@ def add_employee(request):
         position = Position.objects.get(pk=request.POST['position'])
         employee = Employee(organisation=userOrganisation, name=name, surname=surname, position=position)
         employee.save()
+        messages.success(request, f'{employee} added successfully')
 
     return redirect('employees:index')
