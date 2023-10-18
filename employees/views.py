@@ -63,7 +63,13 @@ def details(request, employee_id):
         if userOrganisation == employeeOrganisation:
             employee = Employee.objects.get(pk=employee_id)
             employeeAvailabilities = Availability.objects.filter(employee=employee)
+            return render(request, 'employees/details.html',{
+                'user': request.user,
+                'employee': employee,
+                'availabilities': employeeAvailabilities,
+            })
     except:
+        messages.error(request, f'Employee not found')
         pass
 
     return redirect('employees:index')
@@ -115,3 +121,9 @@ def add_employee(request):
         messages.success(request, f'{employee} added successfully')
 
     return redirect('employees:index')
+
+
+
+#TODO Add search functionality (search by name, surname, position)
+#TODO Add multiple availabilities at once
+#TODO Delete multiple availabilities and or employees at once

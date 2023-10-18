@@ -20,3 +20,10 @@ class AddEmployeeForm(forms.Form):
     def __init__(self, org, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['position'].queryset = Position.objects.filter(organisation=org.id)
+        from django import forms
+
+class AvailabilityForm(forms.ModelForm):
+    class Meta:
+        model = Availability
+        fields = ['availability']
+
