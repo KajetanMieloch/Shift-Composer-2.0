@@ -19,7 +19,7 @@ def index(request):
         'user': request.user,
         'employees': allEmployeesInOrganisation,
         'addPositionForm': AddPositionForm(),
-        'addEmployeeForm': AddEmployeeForm(),
+        'addEmployeeForm': AddEmployeeForm(org=userOrganisation),
     })
 
 @login_required
@@ -41,12 +41,7 @@ def delete(request, employee_id):
     except:
         pass
 
-    return render(request, 'employees/index.html',{
-        'user': request.user,
-        'employees': allEmployeesInOrganisation,
-        'addPositionForm': AddPositionForm(),
-        'addEmployeeForm': AddEmployeeForm(),
-    })
+    return redirect('employees:index')
 
 @login_required
 def details(request, employee_id):
@@ -66,13 +61,7 @@ def details(request, employee_id):
     except:
         pass
 
-    return render(request, 'employees/details.html',{
-        'user': request.user,
-        'employee': employee,
-        'employeeAvailabilities': employeeAvailabilities,
-        'addPositionForm': AddPositionForm(),
-        'addEmployeeForm': AddEmployeeForm(),
-    })
+    return redirect('employees:index')
 
 @login_required
 def add_position(request):
@@ -90,18 +79,14 @@ def add_position(request):
     if request.method == 'POST':
         position = request.POST['position']
         position = Position(organisation=userOrganisation, position=position)
-        if position not in Position.objects.filter(organisation=userOrganisation):
+        alreadyExistingPositions = Position.objects.filter(organisation=userOrganisation, position=position)
+        if not alreadyExistingPositions:
             position.save()
         else:
             #Here will be message that position already exists
             pass
 
-    return render(request, 'employees/index.html',{
-        'user': request.user,
-        'employees': allEmployeesInOrganisation,
-        'addPositionForm': AddPositionForm(),
-        'addEmployeeForm': AddEmployeeForm(),
-    })
+    return redirect('employees:index')
 
 @login_required
 def add_employee(request):
@@ -115,15 +100,11 @@ def add_employee(request):
     allEmployeesInOrganisation = Employee.objects.filter(organisation=userOrganisation)
 
     if request.method == 'POST':
+        print(request.POST)
         name = request.POST['name']
         surname = request.POST['surname']
-        position = request.POST['position']
+        position = Position.objects.get(pk=request.POST['position'])
         employee = Employee(organisation=userOrganisation, name=name, surname=surname, position=position)
         employee.save()
 
-    return render(request, 'employees/index.html',{
-        'user': request.user,
-        'employees': allEmployeesInOrganisation,
-        'addPositionForm': AddPositionForm(),
-        'addEmployeeForm': AddEmployeeForm(),
-    })
+    return redirect('employees:index')

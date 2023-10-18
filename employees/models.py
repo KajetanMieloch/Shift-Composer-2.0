@@ -7,7 +7,7 @@ class Position(models.Model):
     position = models.CharField(max_length=100)
 
     def __str__(self):
-        return  self.organisation.name + " - " + self.position
+        return  self.position
     
 
 class Employee(models.Model):

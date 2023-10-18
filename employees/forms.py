@@ -15,4 +15,8 @@ class AddEmployeeForm(forms.Form):
 
     name = forms.CharField(label='Name', max_length=100)
     surname = forms.CharField(label='Surname', max_length=100)
-    position = forms.ModelChoiceField(queryset=Position.objects.all())
+    position = forms.ModelChoiceField(queryset=Position.objects.none())
+
+    def __init__(self, org, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['position'].queryset = Position.objects.filter(organisation=org.id)

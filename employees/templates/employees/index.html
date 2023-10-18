@@ -24,7 +24,7 @@
             {{addPositionForm.as_p}}
             <button class="p-4 py-2 text-white bg-sky-950 rounded-xl hover:bg-sky-800 text-center">Add Position</button>
         </form>
-        <form action="{% url 'employees:add_position' %}" method="POST" class="border-2 rounded-xl shadow-xl px-8 py-6 flex items-center justify-center grid grid-cols-1 grid-row-2 gap-4">
+        <form action="{% url 'employees:add_employee' %}" method="POST" class="border-2 rounded-xl shadow-xl px-8 py-6 flex items-center justify-center grid grid-cols-1 grid-row-2 gap-4">
             {% csrf_token %}
             {{addEmployeeForm.as_p}}
             <button class="p-4 py-2 text-white bg-sky-950 rounded-xl hover:bg-sky-800 text-center">Add Employee</button>
