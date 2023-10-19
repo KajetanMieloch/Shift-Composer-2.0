@@ -37,6 +37,7 @@
     const yearDropdown = document.getElementById('year');
     const daysGrid = document.querySelector('.grid');
     
+    
     // Load checkedDays from local storage if available
     let checkedDays = JSON.parse(localStorage.getItem('checkedDays')) || [];
     
@@ -89,21 +90,15 @@
         if (e.target.matches('input')) {
             if (e.target.checked) {
                 checkedDays.push(e.target.id);
+                document.getElementById('checkedDaysInput').value = JSON.stringify(checkedDays);
             } else {
                 checkedDays = checkedDays.filter(day => day !== e.target.id);
             }
-            localStorage.setItem('checkedDays', JSON.stringify(checkedDays));
         }
         console.log(checkedDays);
     });
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const storedCheckedDays = JSON.parse(localStorage.getItem('checkedDays'));
-    
-        if (storedCheckedDays && Array.isArray(storedCheckedDays)) {
-            document.getElementById('checkedDaysInput').value = JSON.stringify(storedCheckedDays);
-        }
-    });
+
     
     populateDropdowns();
     generateCheckboxes();    
