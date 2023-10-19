@@ -4,6 +4,8 @@ from .models import Employee, Availability, Position
 from organisation.models import Organisation
 from .forms import AddPositionForm, AddEmployeeForm, AvailabilityForm
 from django.contrib import messages
+from datetime import datetime
+
 
 @login_required
 def index(request):
@@ -52,7 +54,41 @@ def delete(request, employee_id):
 def details(request, employee_id):
     
     if request.method == 'POST':
-        print(request.POST)
+        form = AvailabilityForm(request.POST)
+        if form.is_valid():
+            employee = Employee.objects.get(pk=employee_id)
+            days = request.POST['days']
+            availability = request.POST['availability']
+            availability_hours_start = request.POST['availability_hours_start']
+            availability_hours_end = request.POST['availability_hours_end']
+                      
+            try:
+                request.POST['may_be_extended']
+                may_be_extended = True
+            except:
+                may_be_extended = False
+            
+            for date in days.split(','):
+                cleaned_date = (date.replace('[', '').replace(']', '').strip())[:-1][1:]
+                parts = cleaned_date.split('-')
+                year, month, day = parts[0], parts[1], parts[2]
+                day = day.zfill(2)
+                month = month.zfill(2)
+                formatted_date = f'{year}-{month}-{day}'
+                
+                if availability_hours_start == '':
+                    availability_hours_start = None
+                if availability_hours_end == '':
+                    availability_hours_end = None
+                
+                print(formatted_date)
+                availability_obj = Availability(employee=employee, day=formatted_date, availability=availability, availability_hours_start=availability_hours_start, availability_hours_end=availability_hours_end, may_be_extended=may_be_extended)
+                availability_obj.save()
+                print(availability)
+            
+            messages.success(request, f'Availability added successfully')
+        else:
+            messages.error(request, f'Availability not added')
 
     try:
         Organisation.objects.get(members__user=request.user)

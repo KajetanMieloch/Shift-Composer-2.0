@@ -7,6 +7,19 @@
 
 {% block content %}
 <div class="mt-6 mb-6 px-6 py-12 bg-gray-100 rounded-xl">
+
+    {% for msg in messages %}
+    {% if msg.tags == 'error' %}
+    <div class="px-6 py-4 mb-4 text-sm text-center bg-red-300 rounded-xl text-red-600 text-3xl font-bold">
+        {{ msg }}
+    </div>
+    {% endif %}
+    {% if msg.tags == 'success' %}
+    <div class="px-6 py-4 mb-4 text-sm text-center bg-green-500 rounded-xl opacity-50 text-white-100 text-3xl font-bold">
+        {{ msg }}
+    </div>
+    {% endif %}
+    {% endfor %}
     <h1 class="mb-6 text-4xl font-bold text-center text-sky-950">{{ employee.name }} {{ employee.surname }}</h1>
     <div class="flex flex-col items-center justify-center">
         <div class="max-w-md mx-auto bg-white p-4 rounded-lg">
@@ -24,7 +37,7 @@
         </div>
         <form action="#" method="POST" class="flex flex-col items-center justify-center">
             {% csrf_token %}
-            <input type="hidden" name="checkedDays" id="checkedDaysInput" value="">
+            <input type="hidden" name="days" id="checkedDaysInput" value="">
             {{ form.as_p }}
             <button type="submit" class="px-4 py-2 mt-4 text-white bg-sky-950 rounded hover:bg-sky-850">Submit</button>
         </form>
@@ -49,9 +62,10 @@
             option.text = months[i];
             monthDropdown.appendChild(option);
         }
+        monthDropdown.value = new Date().getMonth();
     
         const currentYear = new Date().getFullYear();
-        for (let year = currentYear; year <= currentYear + 10; year++) {
+        for (let year = currentYear; year <= currentYear +5; year++) {
             const option = document.createElement('option');
             option.value = year;
             option.text = year;

@@ -29,7 +29,6 @@ class Availability(models.Model):
         ('holiday', 'Holiday'),
         ('sick', 'Sick'),
         ('unpaid', 'Unpaid'),
-        ('other', 'Other'),
     )
     
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -37,7 +36,8 @@ class Availability(models.Model):
     availability = models.CharField(max_length=20, choices=AVALIABILITY_CHOICES)
     availability_hours_start = models.TimeField(null=True, blank=True)
     availability_hours_end = models.TimeField(null=True, blank=True)
+    may_be_extended = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.employee.name + " " + self.employee.surname + " - " + str(self.day) + " - " + self.availability
+        return  self.employee.name + " " + self.employee.surname + " - " + str(self.day) + " - " + self.availability
 

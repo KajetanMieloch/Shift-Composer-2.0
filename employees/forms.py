@@ -25,5 +25,9 @@ class AddEmployeeForm(forms.Form):
 class AvailabilityForm(forms.ModelForm):
     class Meta:
         model = Availability
-        fields = ['availability']
+        fields = ['availability', 'availability_hours_start', 'availability_hours_end']
+        
+    availability_hours_start = forms.TimeField(widget=forms.TimeInput(format='%H:%M'), required=False)
+    availability_hours_end = forms.TimeField(widget=forms.TimeInput(format='%H:%M'), required=False)
+    may_be_extended = forms.BooleanField(required=False)
 
