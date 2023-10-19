@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Employee, Availability, Position
 from organisation.models import Organisation
-from .forms import AddPositionForm, AddEmployeeForm
+from .forms import AddPositionForm, AddEmployeeForm, AvailabilityForm
 from django.contrib import messages
 
 @login_required
@@ -50,6 +50,9 @@ def delete(request, employee_id):
 
 @login_required
 def details(request, employee_id):
+    
+    if request.method == 'POST':
+        print(request.POST)
 
     try:
         Organisation.objects.get(members__user=request.user)
@@ -67,6 +70,7 @@ def details(request, employee_id):
                 'user': request.user,
                 'employee': employee,
                 'availabilities': employeeAvailabilities,
+                'form': AvailabilityForm(),
             })
     except:
         messages.error(request, f'Employee not found')
