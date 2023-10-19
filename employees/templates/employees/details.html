@@ -9,9 +9,95 @@
 <div class="mt-6 mb-6 px-6 py-12 bg-gray-100 rounded-xl">
     <h1 class="mb-6 text-4xl font-bold text-center text-sky-950">{{ employee.name }} {{ employee.surname }}</h1>
     <div class="flex flex-col items-center justify-center">
-
-        
+        <div class="max-w-md mx-auto bg-white p-4 rounded-lg">
+            <div class="mb-4">
+                <label for="month">Select Month:</label>
+                <select id="month" class="border p-2">
+                </select>
+                <label for="year">Select Year:</label>
+                <select id="year" class="border p-2">
+                </select>
+            </div>
+            <div class="grid grid-cols-8 gap-1">
+                <!-- Create the checkboxes for each day -->
+            </div>
         </div>
+        
+    </div>
     </div>
 </div>
+<script>
+    const monthDropdown = document.getElementById('month');
+    const yearDropdown = document.getElementById('year');
+    const daysGrid = document.querySelector('.grid');
+
+    let checkedDays = [];
+    
+    // Function to populate the month and year dropdowns
+    function populateDropdowns() {
+        // Populate month dropdown
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        for (let i = 0; i < 12; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.text = months[i];
+            monthDropdown.appendChild(option);
+        }
+    
+        // Populate year dropdown (for example, from 2020 to 2030)
+        const currentYear = new Date().getFullYear();
+        for (let year = currentYear; year <= currentYear + 10; year++) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.text = year;
+            yearDropdown.appendChild(option);
+        }
+    }
+    
+    // Function to generate checkboxes for each day in the selected month and year
+    function generateCheckboxes() {
+        // Clear the existing checkboxes
+        daysGrid.innerHTML = '';
+    
+        const selectedMonth = monthDropdown.value;
+        const selectedYear = yearDropdown.value;
+        const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+    
+        for (let day = 1; day <= daysInMonth; day++) {
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `${selectedYear}-${parseInt(selectedMonth) + 1}-${day}`;
+            checkbox.value = day;
+            if (checkedDays.includes(checkbox.id)) {
+                checkbox.checked = true;
+            }
+    
+            // Add a label for each checkbox
+            const label = document.createElement('label');
+            label.htmlFor = `day-${day}`;
+            label.textContent = day;
+    
+            daysGrid.appendChild(checkbox);
+            daysGrid.appendChild(label);
+        }
+    }
+    
+    // Attach event listeners to the dropdowns to update the checkboxes
+    monthDropdown.addEventListener('change', generateCheckboxes);
+    yearDropdown.addEventListener('change', generateCheckboxes);
+    daysGrid.addEventListener('change', (e) => {
+        if (e.target.matches('input')) {
+            if (e.target.checked) {
+                checkedDays.push(e.target.id);
+            } else {
+                checkedDays = checkedDays.filter(day => day !== e.target.id);
+            }
+        }
+        console.log(checkedDays);
+    });
+    
+    // Initial population of dropdowns and checkboxes
+    populateDropdowns();
+    generateCheckboxes();
+    </script>
 {% endblock %}
