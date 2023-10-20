@@ -4,7 +4,7 @@ from .models import Employee, Availability, Position
 from organisation.models import Organisation
 from .forms import AddPositionForm, AddEmployeeForm, AvailabilityForm
 from django.contrib import messages
-from datetime import datetime
+import datetime
 
 
 @login_required
@@ -81,10 +81,8 @@ def details(request, employee_id):
                 if availability_hours_end == '':
                     availability_hours_end = None
                 
-                print(formatted_date)
                 availability_obj = Availability(employee=employee, day=formatted_date, availability=availability, availability_hours_start=availability_hours_start, availability_hours_end=availability_hours_end, may_be_extended=may_be_extended)
                 availability_obj.save()
-                print(availability)
             
             messages.success(request, f'Availability added successfully')
         else:
@@ -102,11 +100,31 @@ def details(request, employee_id):
         if userOrganisation == employeeOrganisation:
             employee = Employee.objects.get(pk=employee_id)
             employeeAvailabilities = Availability.objects.filter(employee=employee)
+
+            all_availability = []
+            all_availability_hours = []
+            all_unavailability = []
+
+            for availability in employeeAvailabilities:
+                if availability.availability == 'available':
+                    all_availability.append(availability.day.strftime('%Y-%m-%d'))
+                elif availability.availability == 'available_in_hours':
+                    all_availability_hours.append(availability.day.strftime('%Y-%m-%d'))
+                elif availability.availability == 'unavailable':
+                    all_unavailability.append(availability.day.strftime('%Y-%m-%d'))
+
+            print(all_availability)
+            print(all_availability_hours)
+            print(all_unavailability)
+
             return render(request, 'employees/details.html',{
                 'user': request.user,
                 'employee': employee,
                 'availabilities': employeeAvailabilities,
                 'form': AvailabilityForm(),
+                'all_availability': all_availability,
+                'all_availability_hours': all_availability_hours,
+                'all_unavailability': all_unavailability,
             })
     except:
         messages.error(request, f'Employee not found')

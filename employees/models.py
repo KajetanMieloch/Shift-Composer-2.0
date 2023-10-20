@@ -26,9 +26,6 @@ class Availability(models.Model):
         ('available', 'Available'),
         ('available_in_hours', 'Available in hours'),
         ('unavailable', 'Unavailable'),
-        ('holiday', 'Holiday'),
-        ('sick', 'Sick'),
-        ('unpaid', 'Unpaid'),
     )
     
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)

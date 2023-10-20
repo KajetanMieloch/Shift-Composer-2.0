@@ -35,6 +35,9 @@
                 <!-- Create the checkboxes for each day -->
             </div>
         </div>
+        <div class="hidden" id="all_availability"> {{all_availability}} </div>
+        <div class="hidden" id="all_availability_hours"> {{all_availability_hours}} </div>
+        <div class="hidden" id="all_unavailability"> {{all_unavailability}} </div>
         <form action="#" method="POST" class="flex flex-col items-center justify-center">
             {% csrf_token %}
             <input type="hidden" name="days" id="checkedDaysInput" value="">
@@ -79,11 +82,15 @@
         const selectedMonth = monthDropdown.value;
         const selectedYear = yearDropdown.value;
         const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+        let all_availability = document.getElementById('all_availability').innerHTML;
+        let all_availability_hours = document.getElementById('all_availability_hours').innerHTML;
+        let all_unavailability = document.getElementById('all_unavailability').innerHTML;
+
     
         for (let day = 1; day <= daysInMonth; day++) {
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.id = `${selectedYear}-${parseInt(selectedMonth) + 1}-${day}`;
+            checkbox.id = `${selectedYear}-${String(parseInt(selectedMonth) + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
             checkbox.value = day;
             if (checkedDays.includes(checkbox.id)) {
                 checkbox.checked = true;
@@ -92,6 +99,30 @@
             const label = document.createElement('label');
             label.htmlFor = `day-${day}`;
             label.textContent = day;
+
+            console.log(checkbox.id)
+            console.log(all_availability)
+            console.log(all_availability_hours)
+            console.log(all_unavailability)
+
+            console.log(all_availability.includes(checkbox.id))
+
+            if (all_availability.includes(checkbox.id)) {
+                console.log('green')
+                label.classList.add('bg-green-500');
+                checkbox.classList.add('accent-green-500');
+            }
+            if (all_availability_hours.includes(checkbox.id)) {
+                console.log('yellow')
+                label.classList.add('bg-yellow-500');
+                checkbox.classList.add('accent-yellow-500');
+            }
+            if (all_unavailability.includes(checkbox.id)) {
+                console.log('red')
+                label.classList.add('bg-red-500');
+                checkbox.classList.add('accent-red-500');
+            }
+
     
             daysGrid.appendChild(checkbox);
             daysGrid.appendChild(label);
