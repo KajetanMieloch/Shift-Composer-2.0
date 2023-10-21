@@ -80,8 +80,20 @@ def details(request, employee_id):
                     availability_hours_start = None
                 if availability_hours_end == '':
                     availability_hours_end = None
+                    
+                employee = Employee.objects.get(pk=employee_id)
+                employeeAvailabilities = Availability.objects.filter(employee=employee)
                 
                 availability_obj = Availability(employee=employee, day=formatted_date, availability=availability, availability_hours_start=availability_hours_start, availability_hours_end=availability_hours_end, may_be_extended=may_be_extended)
+                
+                if employeeAvailabilities.filter(day=availability_obj.day):
+                    messages.error(request, f'Availability for {availability_obj.day} already exists. Overwriting...')
+                    availability_obj = employeeAvailabilities.get(day=availability_obj.day)
+                    availability_obj.availability = availability
+                    availability_obj.availability_hours_start = availability_hours_start
+                    availability_obj.availability_hours_end = availability_hours_end
+                    availability_obj.may_be_extended = may_be_extended
+                
                 availability_obj.save()
             
             messages.success(request, f'Availability added successfully')
@@ -112,10 +124,6 @@ def details(request, employee_id):
                     all_availability_hours.append(availability.day.strftime('%Y-%m-%d'))
                 elif availability.availability == 'unavailable':
                     all_unavailability.append(availability.day.strftime('%Y-%m-%d'))
-
-            print(all_availability)
-            print(all_availability_hours)
-            print(all_unavailability)
 
             return render(request, 'employees/details.html',{
                 'user': request.user,
