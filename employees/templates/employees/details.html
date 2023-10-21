@@ -81,7 +81,7 @@
     
         const selectedMonth = monthDropdown.value;
         const selectedYear = yearDropdown.value;
-        const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+        const daysInMonth = new Date(selectedYear, parseInt(selectedMonth) + 1, 0).getDate();
         let all_availability = document.getElementById('all_availability').innerHTML;
         let all_availability_hours = document.getElementById('all_availability_hours').innerHTML;
         let all_unavailability = document.getElementById('all_unavailability').innerHTML;
@@ -99,13 +99,6 @@
             const label = document.createElement('label');
             label.htmlFor = `day-${day}`;
             label.textContent = day;
-
-            console.log(checkbox.id)
-            console.log(all_availability)
-            console.log(all_availability_hours)
-            console.log(all_unavailability)
-
-            console.log(all_availability.includes(checkbox.id))
 
             if (all_availability.includes(checkbox.id)) {
                 console.log('green')
