@@ -87,7 +87,7 @@ def details(request, employee_id):
                 availability_obj = Availability(employee=employee, day=formatted_date, availability=availability, availability_hours_start=availability_hours_start, availability_hours_end=availability_hours_end, may_be_extended=may_be_extended)
                 
                 if employeeAvailabilities.filter(day=availability_obj.day):
-                    messages.error(request, f'Availability for {availability_obj.day} already exists. Overwriting...')
+                    messages.info(request, f'Availability for {availability_obj.day} already exists. Overwriting...')
                     availability_obj = employeeAvailabilities.get(day=availability_obj.day)
                     availability_obj.availability = availability
                     availability_obj.availability_hours_start = availability_hours_start
