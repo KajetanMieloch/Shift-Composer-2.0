@@ -50,6 +50,8 @@ def delete(request, employee_id):
 
     return redirect('employees:index')
 
+
+
 @login_required
 def details(request, employee_id):
     

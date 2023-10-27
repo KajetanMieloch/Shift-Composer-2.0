@@ -1,6 +1,10 @@
 {% extends "core/base.html" %}
 
-{% block title %}Your employees{% endblock %}
+{% block title %}{{ employee.name }} {{ employee.surname }}{% endblock %}
+
+{% block head %}
+{% endblock %}
+
 
 {% block style %}
 {% endblock %}
@@ -27,6 +31,11 @@
     {% endfor %}
     <h1 class="mb-6 text-4xl font-bold text-center text-sky-950">{{ employee.name }} {{ employee.surname }}</h1>
     <div class="flex flex-col items-center justify-center">
+        <!-- Create arrow left (next month)-->
+        <div class="flex flex-row items-center justify-center gap-24 mb-6">
+        <button class="px-4 py-2 text-white bg-sky-950 rounded hover:bg-sky-850" onclick="previousMonth();"><---</button>
+        <button class="px-4 py-2 text-white bg-sky-950 rounded hover:bg-sky-850" onclick="nextMonth();">---></button>
+        </div>
         <div class="max-w-md mx-auto bg-white p-4 rounded-lg">
             <div class="mb-4">
                 <label for="month">Select Month:</label>
@@ -80,18 +89,40 @@
             yearDropdown.appendChild(option);
         }
     }
+
+    function nextMonth() {
+        if (monthDropdown.value == 11) {
+            monthDropdown.value = 0;
+            yearDropdown.value = parseInt(yearDropdown.value) + 1;
+        } else {
+            monthDropdown.value = parseInt(monthDropdown.value) + 1;
+        }
+        generateCheckboxes();
+    }
+
+    function previousMonth() {
+        if (yearDropdown.value == new Date().getFullYear() && monthDropdown.value == 0) {
+            return;
+        }
+        if (monthDropdown.value == 0) {
+            monthDropdown.value = 11;
+            yearDropdown.value = parseInt(yearDropdown.value) - 1;
+        } else {
+            monthDropdown.value = parseInt(monthDropdown.value) - 1;
+        }
+        generateCheckboxes();
+    }
     
     function generateCheckboxes() {
         daysGrid.innerHTML = '';
     
-        const selectedMonth = monthDropdown.value;
+        let selectedMonth = monthDropdown.value;
         const selectedYear = yearDropdown.value;
         const daysInMonth = new Date(selectedYear, parseInt(selectedMonth) + 1, 0).getDate();
         let all_availability = document.getElementById('all_availability').innerHTML;
         let all_availability_hours = document.getElementById('all_availability_hours').innerHTML;
         let all_unavailability = document.getElementById('all_unavailability').innerHTML;
 
-    
         for (let day = 1; day <= daysInMonth; day++) {
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
@@ -106,21 +137,17 @@
             label.textContent = day;
 
             if (all_availability.includes(checkbox.id)) {
-                console.log('green')
                 label.classList.add('bg-green-500');
                 checkbox.classList.add('accent-green-500');
             }
             if (all_availability_hours.includes(checkbox.id)) {
-                console.log('yellow')
                 label.classList.add('bg-yellow-500');
                 checkbox.classList.add('accent-yellow-500');
             }
             if (all_unavailability.includes(checkbox.id)) {
-                console.log('red')
                 label.classList.add('bg-red-500');
                 checkbox.classList.add('accent-red-500');
             }
-
     
             daysGrid.appendChild(checkbox);
             daysGrid.appendChild(label);
