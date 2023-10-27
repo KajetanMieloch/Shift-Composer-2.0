@@ -52,14 +52,14 @@
                 <select id="year" class="border p-2">
                 </select>
             </div>
-            <div class="grid grid-cols-7 gap-1">
+            <div class="grid grid-cols-7 gap-1 mb-4">
                 <div class="text-center">Mon</div>
                 <div class="text-center">Tue</div>
                 <div class="text-center">Wed</div>
                 <div class="text-center">Thu</div>
                 <div class="text-center">Fri</div>
-                <div class="text-center">Sat</div>
-                <div class="text-center">Sun</div>
+                <div class="text-center bg-gray-200">Sat</div>
+                <div class="text-center bg-red-200">Sun</div>
             </div>
             <div class="grid grid-cols-7 gap-1" id="days">
                 <!-- Create the checkboxes for each day -->
@@ -138,6 +138,16 @@
         let all_availability = document.getElementById('all_availability').innerHTML;
         let all_availability_hours = document.getElementById('all_availability_hours').innerHTML;
         let all_unavailability = document.getElementById('all_unavailability').innerHTML;
+        let first_week_day = new Date(selectedYear, selectedMonth, 1).getDay();
+
+        if (first_week_day == 0) {
+            first_week_day = 7;
+        }
+        for (let i = 1; i < first_week_day; i++) {
+            const div = document.createElement('div');
+            div.classList.add('grid', 'grid-cols-1', 'gap-1', 'text-center');
+            daysGrid.appendChild(div);
+        }
 
         for (let day = 1; day <= daysInMonth; day++) {
             const div = document.createElement('div');
@@ -153,23 +163,19 @@
 
             div.classList.add('grid', 'grid-cols-1', 'gap-1', 'text-center');
             label.classList.add();
-            checkbox.classList.add('h-12', 'w-12', 'rounded', 'text-center', 'text-white', 'text-xl', 'font-bold', 'cursor-pointer');
+            checkbox.classList.add('h-8', 'w-8', 'rounded', 'text-center', 'text-white', 'text-xl', 'font-bold', 'cursor-pointer', 'ml-2');
 
             label.htmlFor = `day-${day}`;
             label.textContent = day;
 
             if (all_availability.includes(checkbox.id)) {
                 label.classList.add('bg-green-500');
-                checkbox.classList.add('accent-green-500');
-                checkbox.classList.add('accent-green-500');
             }
             if (all_availability_hours.includes(checkbox.id)) {
                 label.classList.add('bg-yellow-500');
-                checkbox.classList.add('accent-yellow-500');
             }
             if (all_unavailability.includes(checkbox.id)) {
                 label.classList.add('bg-red-500');
-                checkbox.classList.add('accent-red-500');
             }
     
             //Create checkbox and label elements inside the div
