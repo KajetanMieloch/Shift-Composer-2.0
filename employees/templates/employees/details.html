@@ -7,6 +7,14 @@
 
 
 {% block style %}
+.green {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #fea
+}
 {% endblock %}
 
 {% block content %}
@@ -31,7 +39,6 @@
     {% endfor %}
     <h1 class="mb-6 text-4xl font-bold text-center text-sky-950">{{ employee.name }} {{ employee.surname }}</h1>
     <div class="flex flex-col items-center justify-center">
-        <!-- Create arrow left (next month)-->
         <div class="flex flex-row items-center justify-center gap-24 mb-6">
         <button class="px-4 py-2 text-white bg-sky-950 rounded hover:bg-sky-850" onclick="previousMonth();"><---</button>
         <button class="px-4 py-2 text-white bg-sky-950 rounded hover:bg-sky-850" onclick="nextMonth();">---></button>
@@ -45,7 +52,16 @@
                 <select id="year" class="border p-2">
                 </select>
             </div>
-            <div class="grid grid-cols-8 gap-1">
+            <div class="grid grid-cols-7 gap-1">
+                <div class="text-center">Mon</div>
+                <div class="text-center">Tue</div>
+                <div class="text-center">Wed</div>
+                <div class="text-center">Thu</div>
+                <div class="text-center">Fri</div>
+                <div class="text-center">Sat</div>
+                <div class="text-center">Sun</div>
+            </div>
+            <div class="grid grid-cols-7 gap-1" id="days">
                 <!-- Create the checkboxes for each day -->
             </div>
         </div>
@@ -65,7 +81,7 @@
 <script>
     const monthDropdown = document.getElementById('month');
     const yearDropdown = document.getElementById('year');
-    const daysGrid = document.querySelector('.grid');
+    const daysGrid = document.getElementById('days');
     
     
     // Load checkedDays from local storage if available
@@ -124,6 +140,7 @@
         let all_unavailability = document.getElementById('all_unavailability').innerHTML;
 
         for (let day = 1; day <= daysInMonth; day++) {
+            const div = document.createElement('div');
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = `${selectedYear}-${String(parseInt(selectedMonth) + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -133,11 +150,17 @@
             }
     
             const label = document.createElement('label');
+
+            div.classList.add('grid', 'grid-cols-1', 'gap-1', 'text-center');
+            label.classList.add();
+            checkbox.classList.add('h-12', 'w-12', 'rounded', 'text-center', 'text-white', 'text-xl', 'font-bold', 'cursor-pointer');
+
             label.htmlFor = `day-${day}`;
             label.textContent = day;
 
             if (all_availability.includes(checkbox.id)) {
                 label.classList.add('bg-green-500');
+                checkbox.classList.add('accent-green-500');
                 checkbox.classList.add('accent-green-500');
             }
             if (all_availability_hours.includes(checkbox.id)) {
@@ -149,8 +172,10 @@
                 checkbox.classList.add('accent-red-500');
             }
     
-            daysGrid.appendChild(checkbox);
-            daysGrid.appendChild(label);
+            //Create checkbox and label elements inside the div
+            div.appendChild(checkbox);
+            div.appendChild(label);
+            daysGrid.appendChild(div);
         }
     }
     
