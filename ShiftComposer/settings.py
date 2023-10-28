@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'organisation',
     'userProfile',
     'employees',
+    'generator',
 ]
 
 MIDDLEWARE = [

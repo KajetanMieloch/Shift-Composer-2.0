@@ -8,4 +8,5 @@ urlpatterns = [
     path('organisation/', include('organisation.urls')),
     path('profile/', include('userProfile.urls')),
     path('employees/', include('employees.urls')),
+    path('generator/', include('generator.urls')),
 ]
