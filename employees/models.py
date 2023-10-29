@@ -18,7 +18,7 @@ class Employee(models.Model):
     position = models.ForeignKey(Position, on_delete=models.CASCADE)
 
     def __str__(self):
-        return  self.organisation.name + " - " + self.name + " " + self.surname + " - " + self.position.position
+        return  self.name + " " + self.surname + " - " + self.position.position
     
 class Availability(models.Model):
     

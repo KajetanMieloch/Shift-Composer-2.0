@@ -1,4 +1,16 @@
 from django.shortcuts import render
+from .forms import SelectEmployeeForm
+from django.shortcuts import redirect
+from organisation.models import Organisation
+
 
 def index(request):
-    return render(request, 'generator/index.html')
+    
+    try:
+        org = Organisation.objects.get(members__user=request.user)
+    except:
+        return redirect('organisation:notinorg')
+    
+    return render(request, 'generator/index.html',{
+        'employees': SelectEmployeeForm(org=org)
+    })
