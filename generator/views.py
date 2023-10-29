@@ -12,5 +12,5 @@ def index(request):
         return redirect('organisation:notinorg')
     
     return render(request, 'generator/index.html',{
-        'employees': SelectEmployeeForm(org=org)
+        'form': SelectEmployeeForm(org),
     })

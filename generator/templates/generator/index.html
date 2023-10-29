@@ -3,9 +3,16 @@
 {% block title %}Shift Generator{% endblock %}
 
 {% block style %}
+.form-control {
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 200px;
+    width: 100%;
+}
 {% endblock %}
 
 {% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="mt-6 mb-6 px-6 py-12 bg-gray-100 rounded-xl">
 
 {% for msg in messages %}
@@ -47,16 +54,51 @@
 <hr class="mb-6">
 <h1 class="mb-6 mt-6 text-4xl font-bold text-center text-sky-950">Parameters</h1>
 <hr class="mb-6">
-<div class="flex flex-wrap justify-center">
-    <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span>
-    <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span>
-    <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span>
-    <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span>
-    <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span>
-    <input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span>
-    {{ employees.as_p }}
-
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div><input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span></div>
+    <div><input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span></div>
+    <div><input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span></div>
+    <div><input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span></div>
+    <div><input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span></div>
+    <div><input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span></div>
+    <div><input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span></div>
+    <div><input type="checkbox" class="form-checkbox h-5 w-5 text-sky-950 ml-2" ><span class="ml-2 text-sky-950">Lorem Ipsum</span></div>
 </div>
+<div class="mt-6 mb-6 px-6 py-12 bg-gray-100 rounded-xl text-center">
+    <form id="select-employee-form" method="POST">
+        {% csrf_token %}
+        <div class="flex">
+            <div class="w-1/2 p-2 m-4">
+              <label for="id_available_employees" class="block text-sm font-medium text-gray-700">Available Employees</label>
+              {{ form.available_employees }}
+            </div>
+            <div class="w-1/2 p-2 m-4">
+              <label for="id_selected_employees" class="block text-sm font-medium text-gray-700">Selected Employees</label>
+              {{ form.selected_employees }}
+            </div>
+          </div>
+            <button type="submit" class="inline-block bg-sky-950 hover:bg-sky-850 text-white font-bold py-2 px-4 rounded-xl">Add Template</button>
+            <button type="submit" class="inline-block bg-sky-950 hover:bg-sky-850 text-white font-bold py-2 px-4 rounded-xl">Generate</button>
+      </form>
+</div>
+</div>
+<script>
+    $(document).ready(function() {
+      // Get the available employees and selected employees fields
+      var availableEmployees = $('#id_available_employees');
+      var selectedEmployees = $('#id_selected_employees');
+  
+      // Move selected employees to the selected employees field
+      availableEmployees.change(function() {
+        availableEmployees.find('option:selected').appendTo(selectedEmployees);
+      });
+  
+      // Move available employees to the available employees field
+      selectedEmployees.change(function() {
+        selectedEmployees.find('option:selected').appendTo(availableEmployees);
+      });
+    });
+  </script>
 {% endblock %}
 
 {% block script %}
