@@ -83,21 +83,26 @@
 </div>
 </div>
 <script>
-    $(document).ready(function() {
-      // Get the available employees and selected employees fields
-      var availableEmployees = $('#id_available_employees');
-      var selectedEmployees = $('#id_selected_employees');
+  $(document).ready(function() {
+    // Get the available employees and selected employees fields
+    var availableEmployees = $('#id_available_employees');
+    var selectedEmployees = $('#id_selected_employees');
   
-      // Move selected employees to the selected employees field
-      availableEmployees.change(function() {
-        availableEmployees.find('option:selected').appendTo(selectedEmployees);
-      });
-  
-      // Move available employees to the available employees field
-      selectedEmployees.change(function() {
-        selectedEmployees.find('option:selected').appendTo(availableEmployees);
-      });
+    // Move selected employees to the selected employees field
+    availableEmployees.change(function() {
+      availableEmployees.find('option:selected').appendTo(selectedEmployees);
     });
+  
+    // Move available employees to the available employees field
+    selectedEmployees.change(function() {
+      selectedEmployees.find('option:selected').appendTo(availableEmployees);
+    });
+  
+    // Make available employees not required
+    availableEmployees.prop('required', false);
+    selectedEmployees.prop('required', true);
+
+  });
   </script>
 {% endblock %}
 

@@ -2,9 +2,10 @@ from django import forms
 from employees.models import Employee, Position, Availability
 from core.models import UserProfile
 
+
 class SelectEmployeeForm(forms.Form):
     available_employees = forms.ModelMultipleChoiceField(queryset=Employee.objects.none())
-    selected_employees = forms.ModelMultipleChoiceField(queryset=Employee.objects.none())
+    selected_employees = forms.ModelMultipleChoiceField(queryset=Employee.objects.none(), required=False)
 
     def __init__(self, org, *args, **kwargs):
         super().__init__(*args, **kwargs)
