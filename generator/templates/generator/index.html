@@ -77,6 +77,16 @@
               {{ form.selected_employees }}
             </div>
           </div>
+          <div>
+            <label>
+              <input type="radio" name="mode" value="ava" required="true" checked>
+              Availablity
+            </label>
+            <label>
+              <input type="radio" name="mode" value="com", disabled>
+              Comming soon...
+            </label>
+          </div>
             <button type="submit" class="inline-block bg-sky-950 hover:bg-sky-850 text-white font-bold py-2 px-4 rounded-xl">Add Template</button>
             <button type="submit" class="inline-block bg-sky-950 hover:bg-sky-850 text-white font-bold py-2 px-4 rounded-xl">Generate</button>
       </form>
