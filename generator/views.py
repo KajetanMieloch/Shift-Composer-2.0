@@ -20,7 +20,8 @@ def index(request):
             for i in range(len(selected_employees)):
                 employee = Employee.objects.get(id=selected_employees[i])
                 employeeList.append(employee)
-                print(i, employee)
+        
+            
                 
                 
             
