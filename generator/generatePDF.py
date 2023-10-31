@@ -43,13 +43,21 @@ def generatePDF(employees: [object], startDate: datetime.date, endDate: datetime
             match_found = False  # Initialize a flag to track if a match is found
             for availability in employee.getAvailability():
                 if availability['day'] == date:
-                    data[-1].append(availability['availability'])
+                    if availability['availability'] == 'available_in_hours':
+                        availability_list = employee.getAvailabilityHours()
+                        date_to_find = availability['day']
+
+                        for availability in availability_list:
+                            if availability['day'] == date_to_find:
+                                start_time = availability['start']
+                                end_time = availability['end']
+                                data[-1].append(str(start_time) + " - " + str(end_time))
+                    else:
+                        data[-1].append(availability['availability'])
                     match_found = True  # Set the flag to True when a match is found
                     break  # Exit the availability loop since we found a match
             if not match_found:
                 data[-1].append('')
-
-
 
 
 
