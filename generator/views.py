@@ -4,6 +4,10 @@ from django.shortcuts import redirect
 from organisation.models import Organisation
 from employees.models import Employee, Availability
 from .employeeClass import Employee as Employee_class
+import os
+from django.http import HttpResponse
+import datetime
+from .generatePDF import generatePDF
 
 
 def index(request):
@@ -16,16 +20,18 @@ def index(request):
     if request.method == 'POST':
                 
         employeeList = []
-                
+
         
         selected_employees = request.POST.getlist('selected_employees')
         mode = request.POST.get('mode')
         start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
+        end_date = request.POST.get('end_date')      
+        
+        start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
+        end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
         
         print(start_date)
-        print(end_date)
-        
+        print(type(start_date))
 
         if mode == 'ava':            
             for i in range(len(selected_employees)):
@@ -43,6 +49,13 @@ def index(request):
                
                 employeeList.append(Employee_class(employee.id, employee.name, employee.surname, employee.position.position, employee_availabilities, employee_availability_hours))
                 
+           
+            
+            pdf_content = generatePDF(employeeList, start_date, end_date)
+            
+            response = HttpResponse(pdf_content, content_type='application/pdf')
+            response['Content-Disposition'] = 'inline; filename="example.pdf"'
+            return response
                                       
 
         else:
