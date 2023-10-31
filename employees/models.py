@@ -36,5 +36,5 @@ class Availability(models.Model):
     may_be_extended = models.BooleanField(default=False)
 
     def __str__(self):
-        return  self.employee.name + " " + self.employee.surname + " - " + str(self.day) + " - " + self.availability
+        return  str(self.day)
 
