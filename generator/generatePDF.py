@@ -24,33 +24,52 @@ def all_days_between(start_date: datetime.date, end_date: datetime.date):
 
 def generatePDF(employees: [object], startDate: datetime.date, endDate: datetime.date):
     
-    #Handle employees data
-    print(employees)
-        
-  
-
-    #Handle saving and displaying    
-    
-    # Create a BytesIO object to hold the PDF data in memory
     pdf_data = BytesIO()
 
     # Create the PDF object and generate the PDF content
     p = canvas.Canvas(pdf_data, pagesize=landscape((3500, 612)))
 
-    # Draw things on the PDF. Customize this part according to your needs.
-    # Example: add your table, text, and other content here.
-
     # Your code for date generation and adding dates to the data list here...
-    data = [[""], ["Kajetan Mieloch"]]
+    data = [[""]]
     dates = all_days_between(startDate, endDate)
-
     # Example: Add the dates to the data list
     for date in dates:
-        
         data[0].append(date.strftime("%d-%m-%Y"))
 
+    # Your code for adding employee data to the data list here...
+    for employee in employees:
+        data.append([employee.getNames()])
+        for date in dates:
+            match_found = False  # Initialize a flag to track if a match is found
+            for availability in employee.getAvailability():
+                if availability['day'] == date:
+                    data[-1].append(availability['availability'])
+                    match_found = True  # Set the flag to True when a match is found
+                    break  # Exit the availability loop since we found a match
+            if not match_found:
+                data[-1].append('')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     # Create a table and set its style
-    table = Table(data, colWidths=1.5)
+    table = Table(data, colWidths=1.5 * 100)
     table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -60,12 +79,17 @@ def generatePDF(employees: [object], startDate: datetime.date, endDate: datetime
         ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
     ]))
 
-    # Your existing code for building the PDF...
-    # (i.e., from p.showPage() to p.save())
+    # Calculate the width and height of the table
+    table_width, table_height = table.wrapOn(p, 0, 0)
+
+    # Position the table at the bottom left corner of the page
+    x = 0
+    y = 512
+
+    # Draw the table on the PDF
+    table.drawOn(p, x, y)
 
     # Instead of saving the PDF to a file, show the page and save it to the BytesIO object
-    table.wrapOn(p, 0, 0)
-    table.drawOn(p, 0, 0)
     p.showPage()
     p.save()
 
